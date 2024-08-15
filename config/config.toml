@@ -1,0 +1,10 @@
+
+access_key_id = ""
+access_key_secret = ""
+region_id = "cn-beijing"
+
+domain_name = "xiaoyusb.fun"
+RR = "local"
+record_type = "AAAA"
+
+ddns_interval = "30s"
