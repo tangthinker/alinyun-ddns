@@ -2,7 +2,9 @@
 
 # Get-Started
 
-设置配置文件即可启动
+1. complete the config.toml file
+
+2. start main.go
 
 ```toml
 
