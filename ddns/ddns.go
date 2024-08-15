@@ -62,6 +62,15 @@ func (c *Client) UpdateInterval(domainName string, RR string, recordType string)
 
 	ticker := time.NewTicker(interval)
 
+	record, err := c.GetRecord(domainName, RR, recordType)
+
+	if err != nil {
+		log.Println("get record error: ", err)
+		return
+	}
+
+	c.cachedHostIP = record.Value
+
 	for {
 		select {
 		case <-ticker.C:
@@ -87,6 +96,8 @@ func (c *Client) UpdateInterval(domainName string, RR string, recordType string)
 				log.Println("current ip address is empty")
 				continue
 			}
+
+			log.Println("current ip address: ", currentHostIP)
 
 			if currentHostIP != c.cachedHostIP {
 				c.cachedHostIP = currentHostIP

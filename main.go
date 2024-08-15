@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	DDNSConfig "github.com/tangthinker/aliyun-ddns/config"
 	"github.com/tangthinker/aliyun-ddns/ddns"
 )
@@ -17,14 +16,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
-	record, err := ddnsClient.GetRecord(domainName, RR, recordType)
-
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println("current record value:", record.Value)
 
 	ddnsClient.UpdateInterval(domainName, RR, recordType)
 }
