@@ -65,11 +65,29 @@ func (c *Client) UpdateInterval(domainName string, RR string, recordType string)
 	for {
 		select {
 		case <-ticker.C:
-			currentHostIP, err := ipaddr.GetIPv6Addr()
+			var currentHostIP string
+			var err error
+
+			// ipv4
+			if recordType == "A" {
+				currentHostIP, err = ipaddr.GetIPv4Addr()
+			}
+
+			// ipv6
+			if recordType == "AAAA" {
+				currentHostIP, err = ipaddr.GetIPv6Addr()
+			}
+
 			if err != nil {
 				log.Println("get ip address error: ", err)
 				continue
 			}
+
+			if currentHostIP == "" {
+				log.Println("current ip address is empty")
+				continue
+			}
+
 			if currentHostIP != c.cachedHostIP {
 				c.cachedHostIP = currentHostIP
 				record, err := c.GetRecord(domainName, RR, recordType)
